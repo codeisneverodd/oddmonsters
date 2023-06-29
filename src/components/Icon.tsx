@@ -39,7 +39,7 @@ export default function Icon({
       <Image
         src={targetImage.light}
         className={twMerge("w-4", className)}
-        alt={`${type} icon`}
+        alt={`${type} 형태의 아이콘`}
         width={20}
         height={20}
       />
