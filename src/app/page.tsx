@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { ComponentProps } from "react";
 import LightBulbManImage from "/public/picture/light-bulb-ink.gif";
 
@@ -45,26 +44,21 @@ function ArticleCard({ className }: ComponentProps<"div">) {
 
 function Thumbnail() {
   return (
-    <div className="relative h-[50vh] w-full">
-      <Image
-        priority
-        src={LightBulbManImage}
-        width={400}
-        height={400}
-        className="absolute h-[50vh] w-full bg-white object-contain"
-        alt="머리가 전구인 정장을 입은 사람"
-      />
-      <div className="absolute  h-[50vh] w-full  bg-black/70 ">
-        <div className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] break-keep text-center text-4xl font-bold leading-normal text-white md:text-5xl">
+    <div className="flex h-[70vh] min-h-[400px] w-full flex-col justify-center pt-40">
+      <div className=" w-full">
+        <div className="break-keep text-center text-4xl font-bold leading-normal text-black md:text-5xl">
           <p>세상 모든 아이디어가</p>
           <p className="md:pt-4">제품이 될 수 있도록</p>
         </div>
-        <p className="absolute bottom-4 right-2 text-sm font-light text-gray-400 hover:text-gray-300 md:text-lg">
-          <Link href="https://giphy.com/sociality2" target="_blank">
-            @sociality2
-          </Link>
-        </p>
       </div>
+      <Image
+        priority
+        src={LightBulbManImage}
+        width={320}
+        height={320}
+        className="h-full max-h-[400px] min-h-[240px] w-full bg-white object-contain "
+        alt="머리가 전구인 정장을 입은 사람"
+      />
     </div>
   );
 }
