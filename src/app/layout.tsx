@@ -5,6 +5,7 @@ import localFont from "next/font/local";
 import Link from "next/link";
 import { useMemo } from "react";
 import "./globals.css";
+import { twMerge } from "tailwind-merge";
 
 const pretendard = localFont({
   src: "../fonts/PretendardVariable.woff2",
@@ -36,23 +37,38 @@ export default function RootLayout({
   );
 }
 
+type NavLink = {
+  href: `/${string}`;
+  title: string;
+};
 function Nav() {
-  const links: {
-    href: `/${string}`;
-    title: string;
-  }[] = useMemo(() => [{ href: "/posts", title: "게시글" }], []);
+  const leftLinks: NavLink[] = useMemo(() => [], []);
+  const rightLinks: NavLink[] = useMemo(
+    () => [{ href: "/posts", title: "게시글" }],
+    []
+  );
+
   return (
     <div className="navbar fixed z-50 bg-base-100 px-6 md:px-8">
       <div className="navbar-start">
         <Link href="/">
           <Logo type="odd" />
         </Link>
+        <HStack className="ml-6 hidden md:flex">
+          {leftLinks.map((l, i) => (
+            <Button key={l.href} className="btn-ghost">
+              <Link href={l.href} className="text-lg">
+                {l.title}
+              </Link>
+            </Button>
+          ))}
+        </HStack>
       </div>
 
       <div className="navbar-end">
         <HStack className="hidden md:flex">
-          {links.map((l) => (
-            <Button key={l.href} className="btn-ghost">
+          {rightLinks.map((l, i, arr) => (
+            <Button key={l.href} className={twMerge("btn-ghost")}>
               <Link href={l.href} className="text-lg">
                 {l.title}
               </Link>
@@ -67,7 +83,12 @@ function Nav() {
             tabIndex={0}
             className="dropdown-content menu rounded-box menu-sm z-[1] mt-3 w-52 bg-base-100 p-2 shadow"
           >
-            {links.map((l) => (
+            {leftLinks.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href}>{l.title}</Link>
+              </li>
+            ))}
+            {rightLinks.map((l) => (
               <li key={l.href}>
                 <Link href={l.href}>{l.title}</Link>
               </li>
@@ -80,6 +101,7 @@ function Nav() {
 }
 
 function Footer() {
+  const email = "support@odd-monsters.com";
   return (
     <footer className="footer bg-neutral p-10 text-neutral-content">
       <div>
@@ -96,13 +118,10 @@ function Footer() {
         <span className="footer-title">고객센터</span>
 
         <address className="font-light not-italic">
-          이메일:{" "}
-          <a href="mailto:oddmonsters.tech@gmail.com">
-            oddmonsters.tech@gmail.com
-          </a>
+          이메일: <a href={`mailto:${email}`}>{email}</a>
         </address>
       </div>
-      <div>
+      {/* <div>
         <span className="footer-title">소셜</span>
 
         <Button className="btn-circle">
@@ -121,7 +140,7 @@ function Footer() {
             </svg>
           </Link>
         </Button>
-      </div>
+      </div> */}
     </footer>
   );
 }
